@@ -489,7 +489,7 @@ export default {
           this.$q.notify({
             type: "negative",
             // message: error.response.data.pesan
-            message: "Terjadi Kesalahan"
+            message: "Terjadi Kesalahan!"
           });
           this.loading = false;
         });
