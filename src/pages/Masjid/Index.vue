@@ -38,9 +38,9 @@
           <q-btn flat icon="event" color="primary">
             {{ masjid.kajian.length }} Kajian
           </q-btn>
-          <q-btn flat icon="star" color="orange">
+          <!-- <q-btn flat icon="star" color="orange">
             {{ masjid.review.length }} Review
-          </q-btn>
+          </q-btn> -->
         </q-card-actions>
       </q-card>
     </div>

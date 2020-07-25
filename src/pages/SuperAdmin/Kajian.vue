@@ -91,6 +91,7 @@
                 class="q-ma-sm"
               />
               <div v-if="typeof profile.guru !== 'undefined'">
+                <div v-if="profile.guru !== null">
                 <q-input
                   filled
                   v-model="profile.guru.nama"
@@ -98,6 +99,7 @@
                   class="q-ma-sm"
                   :disable="true"
                 />
+                </div>
               </div>
               <div class="q-ma-sm">
                 <autocomplete
@@ -111,11 +113,11 @@
                 >
                 </autocomplete>
               </div>
-              <div v-if="typeof profile.guru !== 'undefined'">
+              <div v-if="typeof profile.masjid !== 'undefined'">
                 <q-input
                   filled
                   v-model="profile.masjid.nama"
-                  label="Ustadz"
+                  label="Masjid/Mushalla/Meunasah"
                   class="q-ma-sm"
                   :disable="true"
                 />
@@ -398,13 +400,13 @@ export default {
         {
           name: "ustadz",
           label: "Ustadz ",
-          field: row => row.guru.nama,
+          field: row => row.guru ? row.guru.nama : '',
           sortable: true
         },
         {
           name: "masjid",
           label: "Masjid ",
-          field: row => row.masjid.nama,
+          field: row => row.masjid ? row.masjid.nama : '',
           sortable: true
         }
       ],
@@ -679,7 +681,7 @@ export default {
       this.tag = event.display;
     },
     setProfileGuru(event) {
-      this.profile.guru.id = event.value;
+      this.profile.guru.id = event.value ? event.value : null;
       this.profile.guru.nama = event.display;
     },
     setProfileMasjid(event) {

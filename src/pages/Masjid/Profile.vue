@@ -25,21 +25,23 @@
         </div>
         <br />
         <div class="row flex flex-center">
-          <div class="text-h4">{{ datas.jenis }} {{ datas.nama }}</div>
+          <div class="text-h4">{{ datas.jenis }} {{ datas.nama }}</div><br>
+        </div>
+        <div class="row flex flex-center">
+          <div class="text-subtitle2">{{datas.alamat.nama}}</div>
         </div>
         <q-separator />
         <br />
         <div class="row flex flex-center">
-          <div class="text-subtitle2 col-8">
-            <q
-              ><i>{{ datas.profil }}</i>
-            </q>
+          <div class="text-caption text-center col-8">
+            <i>{{ datas.profil }}</i>
           </div>
         </div>
         <br />
       </q-card-section>
     </q-card>
-    <div class="row">
+    <div class="row" v-if="typeof datas.kajian !== 'undefined'">
+    <div class="row" v-if="datas.kajian.length > 0">
       <div class="col-12 q-pa-md ">
         <q-card class="q-ma-sm">
           <q-table
@@ -57,6 +59,7 @@
           </q-table>
         </q-card>
       </div>
+    </div>
     </div>
   </q-page>
 </template>
