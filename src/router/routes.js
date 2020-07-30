@@ -128,6 +128,10 @@ const routes = [
       {
         path: "flyer",
         component: () => import("pages/Flyer/Index.vue")
+      },
+      {
+        path: "notifikasi",
+        component: () => import("pages/Notifikasi/Index.vue")
       }
     ],
     meta: { requiresAuth: true }

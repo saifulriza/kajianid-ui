@@ -187,8 +187,8 @@ export default {
     };
   },
   methods: {
-    reverseLatlong(lat, long) {
-      this.$axios
+  async  reverseLatlong(lat, long) {
+     await this.$axios
         .get(
           `https://locationiq.org/v1/reverse.php?key=3d0e63349939df&lat=${lat}&lon=${long}&format=json`
         )
