@@ -42,7 +42,7 @@
 
                 <q-card-section
                   class="col-5 flex flex-center"
-                  style="height:300px"
+                  style="height:300px;min-width: 150px;"
                   v-if="data.masjid && latlong.length !== null"
                 >
                   <l-map

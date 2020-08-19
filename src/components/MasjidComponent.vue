@@ -25,7 +25,18 @@
     </q-card>
     <!-- end skeleton -->
     <q-card class="my-card q-ma-sm height-300" v-if="!loading">
-      <q-img v-if="masjids.foto" :src="masjids.foto[0].link">
+      <q-img v-if="typeof masjids.foto[0] !== 'undefined'" :src="masjids.foto[0].link">
+        <q-item
+          @click="redirectProfile(masjids.id)"
+          class="teks absolute-bottom text-subtitle2 text-center"
+          v-ripple
+          clickable
+          style="white-space: nowrap !important; display:block"
+        >
+          {{ masjids.nama }}
+        </q-item>
+      </q-img>
+        <q-img v-if="typeof masjids.foto[0] == 'undefined'" src="https://kajianid.riza.my.id/404.jpg">
         <q-item
           @click="redirectProfile(masjids.id)"
           class="teks absolute-bottom text-subtitle2 text-center"

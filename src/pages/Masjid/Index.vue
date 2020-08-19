@@ -10,38 +10,33 @@
         @click="redirectProfile(masjid.id)"
         style="cursor:pointer"
       >
-        <q-card-section horizontal>
-          <q-card-section class="q-pt-xs">
-            <div class="text-overline">{{ masjid.alamat.nama }}</div>
+        <q-card-section horizontal align="center">
+          <q-card-section class="q-pt-xs full-width">
+            <div class="text-overline">{{ masjid.alamat !== null? masjid.alamat.nama : "Belum ada" }}</div>
             <div class="text-h5 q-mt-sm q-mb-xs">{{ masjid.nama }}</div>
             <div class="text-caption text-grey">
               {{ masjid.profil.substring(0, 100) + ".." }}
             </div>
           </q-card-section>
 
-          <q-card-section
+          <!-- <q-card-section
             v-if="typeof masjid.foto[0] !== 'undefined'"
             class="col-5 flex flex-center"
             style="max-widht:100px; max-height:100px"
           >
-            <q-img
-              class="rounded-borders"
-              :src="masjid.foto[0].link"
-              style="max-widht:100px; max-height:100px"
-            />
-          </q-card-section>
+          </q-card-section> -->
         </q-card-section>
 
         <q-separator />
 
-        <q-card-actions>
+        <q-card-section align="center">
           <q-btn flat icon="event" color="primary">
             {{ masjid.kajian.length }} Kajian
           </q-btn>
           <!-- <q-btn flat icon="star" color="orange">
             {{ masjid.review.length }} Review
           </q-btn> -->
-        </q-card-actions>
+        </q-card-section>
       </q-card>
     </div>
     <div class="row flex flex-center">
@@ -118,3 +113,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+.my-card{
+  min-width: 200px;
+  min-height: 200px;
+  max-height: 300px;
+  max-width: 300px;
+}
+</style>

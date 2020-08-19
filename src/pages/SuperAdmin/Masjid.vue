@@ -39,15 +39,17 @@
                 class="q-ma-sm"
                 label="Profil"
               />
+              <div v-if="profile.alamat !== undefined">
               <q-input
                 filled
-                v-if="profile.alamat"
+                v-if="profile.alamat !== null"
                 :disable="true"
                 v-model="profile.alamat.nama"
                 disabled
                 class="q-ma-sm"
                 label="Alamat"
               />
+              </div>
               <autocomplete
                 source="https://kajian.riza.my.id/api/v1/desa/nama/"
                 placeholder="Ubah Alamat"
@@ -252,7 +254,7 @@ export default {
   },
   data() {
     return {
-      profileFoto: {},
+      profileFoto: [{}],
       desa: {},
       kecamatan: {},
       provinsi: {},
@@ -265,7 +267,8 @@ export default {
       kode_r: "",
       kode_e: "",
       filter: "",
-      profile: {},
+     // profile: {},
+     profile:{},
       loading: false,
       serverPagination: {
         page: 1,
@@ -289,7 +292,7 @@ export default {
         {
           name: "alamat",
           label: "Alamat",
-          field: row => row.alamat.nama
+          field: row => row.alamat !== null ? row.alamat.nama : "Belum ada"
         }
       ]
     };
@@ -422,11 +425,12 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       };
+      let alamat = this.profile.alamat !== null ? this.profile.alamat.kode : ""
       let formEdit = new FormData();
       formEdit.append("nama", this.profile.nama);
       formEdit.append("jenis", this.profile.jenis);
       formEdit.append("profil", this.profile.profil);
-      formEdit.append("alamat", this.profile.alamat.kode);
+      formEdit.append("alamat", alamat);
       formEdit.append("kode_r", this.kode_r);
       formEdit.append("kode_e", this.kode_e);
       this.$axios
@@ -472,9 +476,9 @@ export default {
     },
     setDesa(event) {
       this.dataTambah.alamat = event.value;
-      console.log(this.dataTambah);
     },
     setAlamat(event) {
+      this.profile.alamat = { kode : ""}
       this.profile.alamat.nama = event.display;
       this.profile.alamat.kode = event.value;
     },
@@ -483,7 +487,6 @@ export default {
         .get(`${process.env.API_URL}/api/v1/wilayah`)
         .then(({ data }) => {
           this.provinsi = data.data;
-          console.log(this.wilayah);
         })
         .catch(error => {
           this.$q.notify({

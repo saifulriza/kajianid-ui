@@ -13,7 +13,7 @@
 
         <q-toolbar-title class="flex flex-center">
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
+            <img src="~assets/logo6.png" />
           </q-avatar>
           InfoKajian
         </q-toolbar-title>

@@ -2,21 +2,15 @@
   <q-page class="flex flex-center">
     <!-- skeleton -->
     <div class="row flex flex-center" v-if="loading">
-      <q-card
-        flat
-        style="max-width: 300px"
-        class="q-ma-sm col-2"
-        v-for="n in 5"
-        :key="n"
-      >
-        <q-skeleton height="150px" square />
+    <q-card flat style="width: 300px">
+      <q-skeleton height="150px" square />
 
-        <q-card-section>
-          <q-skeleton type="text" class="text-subtitle1" />
-          <q-skeleton type="text" width="50%" class="text-subtitle1" />
-          <q-skeleton type="text" class="text-caption" />
-        </q-card-section>
-      </q-card>
+      <q-card-section>
+        <q-skeleton type="text" class="text-subtitle1" />
+        <q-skeleton type="text" width="50%" class="text-subtitle1" />
+        <q-skeleton type="text" class="text-caption" />
+      </q-card-section>
+    </q-card>
     </div>
     <!-- end skeleton -->
     <div v-if="!loading">
@@ -194,6 +188,7 @@ export default {
       return this.$router.push(`/kajian/id/${row.id}`);
     },
     async loadData() {
+      this.loading = true;
       await this.$axios
         .get(`${process.env.API_URL}/api/v1/guru/${this.$route.params.id}`)
         .then(response => {

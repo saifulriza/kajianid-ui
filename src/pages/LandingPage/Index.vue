@@ -109,11 +109,20 @@
             />
             <div v-if="lokasi">
               <q-btn
+                v-if="typeof lokasi.address.village !== 'undefined'"
                 color="primary"
                 class="q-ma-sm"
                 :disable="loading"
                 :label="`Kajian di ${lokasi.address.village}`"
                 @click="redirect(lokasi.address.village)"
+              />
+                <q-btn
+                v-if="typeof lokasi.address.state  !== 'undefined'"
+                color="primary"
+                class="q-ma-sm"
+                :disable="loading"
+                :label="`Kajian di ${lokasi.address.state}`"
+                @click="redirect(lokasi.address.state)"
               />
             </div>
             <div v-if="!lokasi">

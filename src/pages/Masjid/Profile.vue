@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <q-card class="my-card q-ma-sm" v-if="Object.keys(datas).length !== 0">
       <q-card-section>
-        <div class="col-12 full-width">
+        <div class="col-12 full-width" v-if="datas.foto.length > 0">
           <q-carousel
             animated
             v-model="slide"
@@ -15,6 +15,7 @@
             size="100px"
             style="max-height:300px"
           >
+
             <q-carousel-slide
               v-for="data in datas.foto"
               :key="data.id"
@@ -28,7 +29,7 @@
           <div class="text-h4">{{ datas.jenis }} {{ datas.nama }}</div><br>
         </div>
         <div class="row flex flex-center">
-          <div class="text-subtitle2">{{datas.alamat.nama}}</div>
+          <div class="text-subtitle2">{{datas.alamat !== null ? datas.alamat.nama : "Belum ada"}}</div>
         </div>
         <q-separator />
         <br />
