@@ -49,6 +49,7 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         port: ${{ secrets.REMOTE_PORT }}
         password: ${{ secrets.REMOTE_PASSWORD }}
+        script: whoami 
         source: "dist/pwa/*"
         target: "kajianid.riza.my.id"
-        strip_components: 2  
+        strip_components: 2    
