@@ -2,15 +2,15 @@
   <q-page class="flex flex-center">
     <!-- skeleton -->
     <div class="row flex flex-center" v-if="loading">
-    <q-card flat style="width: 300px">
-      <q-skeleton height="150px" square />
+      <q-card flat style="width: 300px">
+        <q-skeleton height="150px" square />
 
-      <q-card-section>
-        <q-skeleton type="text" class="text-subtitle1" />
-        <q-skeleton type="text" width="50%" class="text-subtitle1" />
-        <q-skeleton type="text" class="text-caption" />
-      </q-card-section>
-    </q-card>
+        <q-card-section>
+          <q-skeleton type="text" class="text-subtitle1" />
+          <q-skeleton type="text" width="50%" class="text-subtitle1" />
+          <q-skeleton type="text" class="text-caption" />
+        </q-card-section>
+      </q-card>
     </div>
     <!-- end skeleton -->
     <div v-if="!loading">
@@ -154,7 +154,8 @@ export default {
         {
           name: "jam",
           label: "Jam",
-          field: row => row.jam_mulai.slice(0,-3) + " - " + row.jam_selesai.slice(0,-3),
+          field: row =>
+            row.jam_mulai.slice(0, -3) + " - " + row.jam_selesai.slice(0, -3),
           sortable: true
         },
         { name: "bahasan", label: "Bahasan", field: "bahasan" },

@@ -92,13 +92,13 @@
               />
               <div v-if="typeof profile.guru !== 'undefined'">
                 <div v-if="profile.guru !== null">
-                <q-input
-                  filled
-                  v-model="profile.guru.nama"
-                  label="Ustadz"
-                  class="q-ma-sm"
-                  :disable="true"
-                />
+                  <q-input
+                    filled
+                    v-model="profile.guru.nama"
+                    label="Ustadz"
+                    class="q-ma-sm"
+                    :disable="true"
+                  />
                 </div>
               </div>
               <div class="q-ma-sm">
@@ -400,13 +400,13 @@ export default {
         {
           name: "ustadz",
           label: "Ustadz ",
-          field: row => row.guru ? row.guru.nama : '',
+          field: row => (row.guru ? row.guru.nama : ""),
           sortable: true
         },
         {
           name: "masjid",
           label: "Masjid ",
-          field: row => row.masjid ? row.masjid.nama : '',
+          field: row => (row.masjid ? row.masjid.nama : ""),
           sortable: true
         }
       ],

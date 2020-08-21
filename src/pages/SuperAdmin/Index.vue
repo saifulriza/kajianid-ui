@@ -115,7 +115,6 @@
 
       <!-- ------ -->
 
-
       <q-card
         class="q-pa-sm q-ma-sm col-xl-4 col-md-3 col-sm-12 my-card bg-primary text-white"
         @click="$router.push('notifikasi')"
@@ -142,14 +141,12 @@
 export default {
   data() {
     return {
-      notifikasi:{},
+      notifikasi: {},
       datas: {}
     };
   },
   methods: {
-
     async loadData() {
-
       let config = {
         headers: {
           Authorization: `Basic ${process.env.ONESIGNAL_API_KEY}`
@@ -169,9 +166,12 @@ export default {
           });
         });
 
-        // get notifikasi
-        await this.$axios
-        .get(`https://onesignal.com/api/v1/notifications?app_id=${process.env.ONESIGNAL_APP_ID}`, config)
+      // get notifikasi
+      await this.$axios
+        .get(
+          `https://onesignal.com/api/v1/notifications?app_id=${process.env.ONESIGNAL_APP_ID}`,
+          config
+        )
         .then(response => {
           this.notifikasi = response.data;
         })

@@ -15,7 +15,6 @@
             size="100px"
             style="max-height:300px"
           >
-
             <q-carousel-slide
               v-for="data in datas.foto"
               :key="data.id"
@@ -26,10 +25,13 @@
         </div>
         <br />
         <div class="row flex flex-center">
-          <div class="text-h4">{{ datas.jenis }} {{ datas.nama }}</div><br>
+          <div class="text-h4">{{ datas.jenis }} {{ datas.nama }}</div>
+          <br />
         </div>
         <div class="row flex flex-center">
-          <div class="text-subtitle2">{{datas.alamat !== null ? datas.alamat.nama : "Belum ada"}}</div>
+          <div class="text-subtitle2">
+            {{ datas.alamat !== null ? datas.alamat.nama : "Belum ada" }}
+          </div>
         </div>
         <q-separator />
         <br />
@@ -42,25 +44,25 @@
       </q-card-section>
     </q-card>
     <div class="row" v-if="typeof datas.kajian !== 'undefined'">
-    <div class="row" v-if="datas.kajian.length > 0">
-      <div class="col-12 q-pa-md ">
-        <q-card class="q-ma-sm">
-          <q-table
-            title="Jadwal Kajian"
-            :data="row"
-            :columns="columns"
-            color="primary"
-            row-key="name"
-            :loading="loading"
-            @row-click="onRowClick"
-          >
-            <template v-slot:loading>
-              <q-inner-loading showing color="primary" />
-            </template>
-          </q-table>
-        </q-card>
+      <div class="row" v-if="datas.kajian.length > 0">
+        <div class="col-12 q-pa-md ">
+          <q-card class="q-ma-sm">
+            <q-table
+              title="Jadwal Kajian"
+              :data="row"
+              :columns="columns"
+              color="primary"
+              row-key="name"
+              :loading="loading"
+              @row-click="onRowClick"
+            >
+              <template v-slot:loading>
+                <q-inner-loading showing color="primary" />
+              </template>
+            </q-table>
+          </q-card>
+        </div>
       </div>
-    </div>
     </div>
   </q-page>
 </template>
@@ -83,7 +85,8 @@ export default {
         {
           name: "jam",
           label: "Jam",
-          field: row => row.jam_mulai.slice(0,-3) + " - " + row.jam_selesai.slice(0,-3),
+          field: row =>
+            row.jam_mulai.slice(0, -3) + " - " + row.jam_selesai.slice(0, -3),
           sortable: true
         },
         { name: "bahasan", label: "Bahasan", field: "bahasan" }

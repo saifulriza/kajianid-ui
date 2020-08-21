@@ -87,7 +87,8 @@
           >
             <td class="text-left">{{ kajian.hari }}</td>
             <td class="text-left">
-              {{ kajian.jam_mulai.slice(0,-3) }} - {{ kajian.jam_selesai.slice(0,-3) }}
+              {{ kajian.jam_mulai.slice(0, -3) }} -
+              {{ kajian.jam_selesai.slice(0, -3) }}
             </td>
             <td class="text-left">
               {{

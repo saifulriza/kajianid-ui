@@ -12,7 +12,9 @@
       >
         <q-card-section horizontal align="center">
           <q-card-section class="q-pt-xs full-width">
-            <div class="text-overline">{{ masjid.alamat !== null? masjid.alamat.nama : "Belum ada" }}</div>
+            <div class="text-overline">
+              {{ masjid.alamat !== null ? masjid.alamat.nama : "Belum ada" }}
+            </div>
             <div class="text-h5 q-mt-sm q-mb-xs">{{ masjid.nama }}</div>
             <div class="text-caption text-grey">
               {{ masjid.profil.substring(0, 100) + ".." }}
@@ -114,7 +116,7 @@ export default {
 };
 </script>
 <style scoped>
-.my-card{
+.my-card {
   min-width: 200px;
   min-height: 200px;
   max-height: 300px;

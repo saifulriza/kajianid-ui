@@ -40,15 +40,15 @@
                 label="Profil"
               />
               <div v-if="profile.alamat !== undefined">
-              <q-input
-                filled
-                v-if="profile.alamat !== null"
-                :disable="true"
-                v-model="profile.alamat.nama"
-                disabled
-                class="q-ma-sm"
-                label="Alamat"
-              />
+                <q-input
+                  filled
+                  v-if="profile.alamat !== null"
+                  :disable="true"
+                  v-model="profile.alamat.nama"
+                  disabled
+                  class="q-ma-sm"
+                  label="Alamat"
+                />
               </div>
               <autocomplete
                 source="https://kajian.riza.my.id/api/v1/desa/nama/"
@@ -267,8 +267,8 @@ export default {
       kode_r: "",
       kode_e: "",
       filter: "",
-     // profile: {},
-     profile:{},
+      // profile: {},
+      profile: {},
       loading: false,
       serverPagination: {
         page: 1,
@@ -292,7 +292,7 @@ export default {
         {
           name: "alamat",
           label: "Alamat",
-          field: row => row.alamat !== null ? row.alamat.nama : "Belum ada"
+          field: row => (row.alamat !== null ? row.alamat.nama : "Belum ada")
         }
       ]
     };
@@ -425,7 +425,7 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       };
-      let alamat = this.profile.alamat !== null ? this.profile.alamat.kode : ""
+      let alamat = this.profile.alamat !== null ? this.profile.alamat.kode : "";
       let formEdit = new FormData();
       formEdit.append("nama", this.profile.nama);
       formEdit.append("jenis", this.profile.jenis);
@@ -478,7 +478,7 @@ export default {
       this.dataTambah.alamat = event.value;
     },
     setAlamat(event) {
-      this.profile.alamat = { kode : ""}
+      this.profile.alamat = { kode: "" };
       this.profile.alamat.nama = event.display;
       this.profile.alamat.kode = event.value;
     },

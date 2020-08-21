@@ -278,26 +278,26 @@ export default {
       date: "2019/02/01",
       modalTambah: false,
       dataTambah: {
-        fb: '',
-        twitter: '',
-        instagram : '',
-        youtube: ''
+        fb: "",
+        twitter: "",
+        instagram: "",
+        youtube: ""
       },
       modalEdit: false,
       kode_r: "",
       kode_e: "",
       filter: "",
       profile: {
-        fb: '',
-        twitter: '',
-        instagram : '',
-        youtube: ''
+        fb: "",
+        twitter: "",
+        instagram: "",
+        youtube: ""
       },
       loading: false,
       serverPagination: {
         page: 1,
-        sortBy: 'nama',
-        descending : false,
+        sortBy: "nama",
+        descending: false,
         rowsNumber: 10
       },
 
@@ -316,14 +316,29 @@ export default {
           name: "tgl_lahir",
           label: "TTL ",
           field: row => row.tempat_lahir + ", " + row.tgl_lahir,
-          sortable:true,
+          sortable: true
         },
-        { name: "fb", label: "FB", field: row => (row.fb == 'null' || row.fb === null) ? 'Belum Ada': row.fb },
-        { name: "twitter", label: "Twitter", field: row => (row.twitter == 'null' || row.twitter === null) ? 'Belum Ada' : row.twitter },
+        {
+          name: "fb",
+          label: "FB",
+          field: row =>
+            row.fb == "null" || row.fb === null ? "Belum Ada" : row.fb
+        },
+        {
+          name: "twitter",
+          label: "Twitter",
+          field: row =>
+            row.twitter == "null" || row.twitter === null
+              ? "Belum Ada"
+              : row.twitter
+        },
         {
           name: "youtube",
           label: "Youtube",
-          field:  row => (row.youtube == 'null' || row.youtube === null) ? 'Belum Ada' : row.youtube ,
+          field: row =>
+            row.youtube == "null" || row.youtube === null
+              ? "Belum Ada"
+              : row.youtube,
           sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
         }
         // { name: 'foto', label: 'Foto', field: 'foto', }
@@ -415,7 +430,7 @@ export default {
       formEdit.append("profile", this.profile.profile);
       formEdit.append("tempat_lahir", this.profile.tempat_lahir);
       formEdit.append("tgl_lahir", this.profile.tgl_lahir);
-      formEdit.append("fb", this.profile.fb );
+      formEdit.append("fb", this.profile.fb);
       formEdit.append("twitter", this.profile.twitter);
       formEdit.append("youtube", this.profile.youtube);
       formEdit.append("instagram", this.profile.instagram);
@@ -516,12 +531,14 @@ export default {
 
       // we do the server data fetch, based on pagination and filter received
       // (using Axios here, but can be anything; parameters vary based on backend implementation)
-      if(pagination.sortBy == null){
-        pagination.sortBy = 'nama'
+      if (pagination.sortBy == null) {
+        pagination.sortBy = "nama";
       }
 
       this.$axios
-        .get(`${process.env.API_URL}/api/v1/guru?page=${pagination.page}&sortBy=${pagination.sortBy}&descending=${pagination.descending}`)
+        .get(
+          `${process.env.API_URL}/api/v1/guru?page=${pagination.page}&sortBy=${pagination.sortBy}&descending=${pagination.descending}`
+        )
         .then(({ data }) => {
           // updating pagination to reflect in the UI
           this.serverPagination = pagination;

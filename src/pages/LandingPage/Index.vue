@@ -116,8 +116,8 @@
                 :label="`Kajian di ${lokasi.address.village}`"
                 @click="redirect(lokasi.address.village)"
               />
-                <q-btn
-                v-if="typeof lokasi.address.state  !== 'undefined'"
+              <q-btn
+                v-if="typeof lokasi.address.state !== 'undefined'"
                 color="primary"
                 class="q-ma-sm"
                 :disable="loading"
@@ -164,7 +164,8 @@ export default {
           name: "jam",
           align: "center",
           label: "Mulai",
-          field: row => row.jam_mulai.slice(0,-3) + " - " + row.jam_selesai.slice(0,-3),
+          field: row =>
+            row.jam_mulai.slice(0, -3) + " - " + row.jam_selesai.slice(0, -3),
           sortable: true
         },
         {
@@ -196,8 +197,8 @@ export default {
     };
   },
   methods: {
-  async  reverseLatlong(lat, long) {
-     await this.$axios
+    async reverseLatlong(lat, long) {
+      await this.$axios
         .get(
           `https://locationiq.org/v1/reverse.php?key=3d0e63349939df&lat=${lat}&lon=${long}&format=json`
         )

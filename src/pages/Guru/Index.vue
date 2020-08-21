@@ -10,20 +10,20 @@
         v-for="n in 5"
         :key="n"
       >
-      <q-item style="max-width: 300px">
-        <q-item-section avatar>
-          <q-skeleton type="QAvatar" />
-        </q-item-section>
+        <q-item style="max-width: 300px">
+          <q-item-section avatar>
+            <q-skeleton type="QAvatar" />
+          </q-item-section>
 
-        <q-item-section>
-          <q-item-label>
-            <q-skeleton type="text" />
-          </q-item-label>
-          <q-item-label caption>
-            <q-skeleton type="text" width="65%" />
-          </q-item-label>
-        </q-item-section>
-      </q-item>
+          <q-item-section>
+            <q-item-label>
+              <q-skeleton type="text" />
+            </q-item-label>
+            <q-item-label caption>
+              <q-skeleton type="text" width="65%" />
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-card>
     </div>
     <!-- end skeleton -->
@@ -35,26 +35,20 @@
         v-for="guru in gurus"
         :key="guru.id"
       >
-      <q-item
-      @click="redirectProfile(guru.id)"
-      clickable
-      v-ripple
-      >
-        <q-item-section avatar>
-          <q-avatar>
-            <q-img 
-            v-if="guru.foto" :src="guru.foto"
-            />
-          </q-avatar>
-        </q-item-section>
+        <q-item @click="redirectProfile(guru.id)" clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar>
+              <q-img v-if="guru.foto" :src="guru.foto" />
+            </q-avatar>
+          </q-item-section>
 
-        <q-item-section>
-          <q-item-label>{{ guru.nama }}</q-item-label>
-          <q-item-label caption>
-            {{ guru.lulusan }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
+          <q-item-section>
+            <q-item-label>{{ guru.nama }}</q-item-label>
+            <q-item-label caption>
+              {{ guru.lulusan }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-card>
     </div>
     <div class="flex flex-center">
@@ -152,7 +146,7 @@ export default {
 .q-img {
   height: 150px;
 }
-.my-card{
+.my-card {
   min-width: 250px;
 }
 </style>
