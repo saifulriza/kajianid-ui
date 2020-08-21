@@ -1,0 +1,56 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Node.js dulu sob
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: NPM cache  
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-
+    - name: Kemudian install NPM dependency
+      run: npm install
+    - name: Kemudian install paket CLI-nya
+      run: npm install -g @quasar/cli
+    - name: Buat file .env untuk development
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_API_URL: ${{ secrets.API_URL }}
+        envkey_ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+        envkey_ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY}}
+        file_name: .env
+    - name: Kita jalankan unit testingnya dulu
+      run: quasar test --unit jest --dev="-m pwa"
+    - name: Buat file .env.production untuk production
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_API_URL: ${{ secrets.API_URL }}
+        envkey_ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+        envkey_ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY}}
+        file_name: .env.production
+    - name: Kemudian baru kita build aplikasinya
+      run: quasar build -m pwa
+    - name: Copy file dari workspace CI ke Hosting via SSH
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        port: ${{ secrets.REMOTE_PORT }}
+        password: ${{ secrets.REMOTE_PASSWORD }}
+        source: "dist/pwa/*"
+        target: "kajianid.riza.my.id"
+        strip_components: 2  
+    - name: Code Lines Badge
+      uses: Kherrisan/cloc-badge-action@1.0.1  
