@@ -52,5 +52,3 @@ jobs:
         source: "dist/pwa/*"
         target: "kajianid.riza.my.id"
         strip_components: 2  
-    - name: Code Lines Badge
-      uses: Kherrisan/cloc-badge-action@1.0.1  
