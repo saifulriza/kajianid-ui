@@ -3,7 +3,7 @@
 Sistem Informasi Masjid, Ustadz dan Kajian Rutin
 
 <p align="center">
-  ![Node CI](https://github.com/Saifulriza123/kajianid-ui/workflows/Node%20CI/badge.svg)
+  <img src="https://github.com/Saifulriza123/kajianid-ui/workflows/Node%20CI/badge.svg" alt="CI Badge"/>
 </p>
 
 ## Install the dependencies
