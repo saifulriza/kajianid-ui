@@ -5,9 +5,7 @@ Sistem Informasi Masjid, Ustadz dan Kajian Rutin
 <p align="center">
   <img src="https://github.com/Saifulriza123/kajianid-ui/workflows/Node%20CI/badge.svg" alt="CI Badge"/>
 </p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Saifulriza123/kajianid-ui/master/cloc.svg" alt="Code Lines"/>
-</p>
+
 ## Install the dependencies
 ```bash
 npm install
