@@ -10,7 +10,7 @@
     "pretty": "prettier --write \"./**/*.vue\""
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.9.3",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
     "countup.js": "^2.0.5",
