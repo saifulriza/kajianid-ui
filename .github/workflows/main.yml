@@ -1,6 +1,11 @@
 name: Node CI
 
-on: [push]
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -49,9 +54,6 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         port: ${{ secrets.REMOTE_PORT }}
         password: ${{ secrets.REMOTE_PASSWORD }}
-        run: whoami  
         source: "dist/pwa/*"
         target: "kajianid.riza.my.id"
         strip_components: 2    
-    - name: Siapakah saya?
-      run: whoami
