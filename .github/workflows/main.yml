@@ -42,6 +42,11 @@ jobs:
         file_name: .env.production
     - name: Kemudian baru kita build aplikasinya
       run: quasar build -m pwa
+    - name: Save artifact hasil build
+      uses: actions/upload-artifact@v2
+      with:
+        name: Hasil build
+        path: dist/pwa/ 
   deploy:
     runs-on: ubuntu-latest
     needs: test
