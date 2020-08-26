@@ -8,7 +8,7 @@
       </div>
 
       <div class="text-h2" style="opacity:.4">
-        Oops. Salah alamat...
+        Oops. Salah alamat..
       </div>
 
       <q-btn
