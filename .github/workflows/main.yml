@@ -47,6 +47,28 @@ jobs:
     needs: test
     if: success() && github.ref == 'refs/heads/master'
     steps:
+      - name: Install Node.js dulu sob
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: NPM cache  
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
+      - name: Kemudian install NPM dependency
+        run: npm install
+      - name: Kemudian install paket CLI-nya
+        run: npm install -g @quasar/cli
+      - name: Buat file .env.production untuk production
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_API_URL: ${{ secrets.API_URL }}
+          envkey_ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          envkey_ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY}}
+          file_name: .env.production
       - name: Kita build aplikasinya
         run: quasar build -m pwa
       - name: Copy file dari workspace CI ke Hosting via SSH
