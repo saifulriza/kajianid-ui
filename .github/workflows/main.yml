@@ -56,4 +56,5 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }}
           source: "dist/pwa/*"
           target: "kajianid.riza.my.id"
+          debug: true  
           strip_components: 2    
