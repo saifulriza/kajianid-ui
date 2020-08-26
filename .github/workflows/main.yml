@@ -1,9 +1,6 @@
 name: Node CI
 
-on:
-  # Trigger the workflow on push or pull request,
-  # but only for the master branch
-  push:
+on: push
 
 jobs:
   build:
