@@ -37,8 +37,7 @@ jobs:
       
       # Starting build in development mode
       if: github.ref  == !'refs/heads/master'
-    - name: Ini untuk development
-    - name: Buat file .env.production untuk development
+    - name: Ini untuk development /n Buat file .env.production untuk development
       uses: SpicyPizza/create-envfile@v1
       with:
         envkey_API_URL: ${{ secrets.API_URL }}
@@ -62,8 +61,7 @@ jobs:
           
       # Starting build in production mode
       if: github.ref  == 'refs/heads/master'
-    - name: Ini untuk production
-    - name: Buat file .env.production untuk production
+    - name: Ini untuk production \n Buat file .env.production untuk production
       uses: SpicyPizza/create-envfile@v1
       with:
         envkey_API_URL: ${{ secrets.API_URL }}
