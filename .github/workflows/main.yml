@@ -1,11 +1,6 @@
 name: Node CI
 
-on:
-  # Trigger the workflow on push or pull request,
-  # but only for the master branch
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   build:
@@ -47,6 +42,7 @@ jobs:
         file_name: .env.production
     - name: Kemudian baru kita build aplikasinya
       run: quasar build -m pwa
+      if: github.ref == 'refs/heads/master'
     - name: Copy file dari workspace CI ke Hosting via SSH
       uses: appleboy/scp-action@master
       with:
