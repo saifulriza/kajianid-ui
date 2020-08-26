@@ -71,7 +71,7 @@ jobs:
           file_name: .env.production
       - name: Kita build aplikasinya
         run: quasar build -m pwa
-      - name: Copy file dari workspace CI ke Hosting via SSH
+      - name: Copy file dari workspace CI ke Hosting
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
