@@ -93,6 +93,9 @@
         </q-item-section>
       </q-item>
     </q-card>
+      <p :class="$style.red">
+    This should be red
+  </p>
   </div>
 </template>
 
@@ -132,6 +135,7 @@ export default {
     }
   },
   async created() {
+    console.log("warna : " + JSON.stringify(this.$style))
     await this.loadData();
     this.profile = this.gurus.profile
       ? this.gurus.profile.substring(0, 255) + ".."
@@ -141,9 +145,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.q-img {
-  height: 200px;
-  width: 282px;
-}
-</style>
+<style lang="css" src="./GuruComponent.css" module/>

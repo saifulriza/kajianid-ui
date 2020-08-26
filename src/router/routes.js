@@ -8,6 +8,11 @@ const routes = [
   },
 
   {
+    path: "/dev",
+    component: () => import("pages/dev.vue"),
+  },
+
+  {
     path: "/guru",
     component: () => import("layouts/MainLayout.vue"),
     children: [

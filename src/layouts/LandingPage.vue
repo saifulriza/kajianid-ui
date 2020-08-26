@@ -89,8 +89,8 @@
     </q-page-container>
 
     <q-footer elevated class="bg-grey-8 text-white">
-      <q-toolbar class="bg-grey-8 text-white shadow-2 rounded-borders">
-        InfoKajian © {{ new Date().getFullYear() }}
+      <q-toolbar class="bg-grey-8 text-white shadow-2 rounded-borders" @click="$router.push('/dev')">
+        InfoKajian © {{ new Date().getFullYear() }} 
         <q-space />
 
         <!--
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import User from 'models/User';
 import GuruComponent from "components/GuruComponent.vue";
 import MasjidComponent from "components/MasjidComponent.vue";
 

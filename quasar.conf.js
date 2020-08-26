@@ -3,6 +3,8 @@
  * the ES6 features that are supported by your Node version. https://node.green/
  */
 
+let path = require('path');
+
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
@@ -57,7 +59,39 @@ module.exports = function(/* ctx */) {
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/handling-webpack
-      extendWebpack(cfg) {}
+      extendWebpack(cfg) {
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          'models' : path.resolve(__dirname, './src/store/models'),
+        }
+          cfg.module.rules.push({
+              test: /\.scss$/,
+              exclude: /node_modules/,
+              oneOf: [
+                // this matches `<style module>`
+                {
+                  resourceQuery: /module/,
+                  use: [
+                    'scss-loader',
+                    {
+                      loader: 'css-loader',
+                      options: {
+                        modules: true,
+                        localIdentName: '[sha1:hash:hex:4]'
+                      }
+                    },
+                  ]
+                },
+                // this matches plain `<style>` or `<style scoped>`
+                {
+                  use: [
+                    'vue-style-loader',
+                    'css-loader'
+                  ]
+                }
+              ]
+          })
+      }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer

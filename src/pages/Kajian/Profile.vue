@@ -226,8 +226,5 @@ export default {
   }
 };
 </script>
-<style scoped>
-.q-img {
-  width: 300px;
-}
-</style>
+
+<style lang="sass" src="./Profile.sass" scoped></style>

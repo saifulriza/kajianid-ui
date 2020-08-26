@@ -142,11 +142,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.q-img {
-  height: 150px;
-}
-.my-card {
-  min-width: 250px;
-}
-</style>
+<style lang="sass" src="./Index.sass" scoped></style>

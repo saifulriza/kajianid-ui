@@ -161,9 +161,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.q-img {
-  height: 200px;
-  width: 282px;
-}
-</style>
+<style lang="sass" src="./MasjidComponent.sass" scoped></style>

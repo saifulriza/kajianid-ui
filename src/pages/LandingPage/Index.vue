@@ -143,6 +143,7 @@
 </template>
 
 <script>
+import User from 'models/User'
 export default {
   name: "PageIndex",
   data() {
@@ -304,6 +305,24 @@ export default {
     await this.loadFlyer();
     this.lokasi = JSON.parse(localStorage.getItem(`lokasi${date}`));
     this.loading = false;
+  },
+
+  mounted() {
+  User.insert({
+
+    data: {
+      id: 1,
+      name: 'saiful',
+      email:'email@mail.com'
+    }
+
+  })
+  },
+
+  computed:{
+    user(){
+      return User.find(1);
+    }
   }
 };
 </script>

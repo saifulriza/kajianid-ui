@@ -115,11 +115,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.my-card {
-  min-width: 200px;
-  min-height: 200px;
-  max-height: 300px;
-  max-width: 300px;
-}
-</style>
+<style lang="sass" src="./Index.sass" ></style>
