@@ -36,7 +36,7 @@ jobs:
     - name: Apakah ini untuk production?
       
       # Starting build in development mode
-      if: github.ref  == !'refs/heads/master'
+      if: github.ref  !== 'refs/heads/master'
     - name: Ini untuk development /n Buat file .env.production untuk development
       uses: SpicyPizza/create-envfile@v1
       with:
