@@ -47,6 +47,15 @@ jobs:
     needs: test
     if: success() && github.ref == 'refs/heads/master'
     steps:
+      - name: Buat file .env.production untuk production
+        uses: appleboy/scp-action@master
+        with: 
+          envkey_API_URL: ${{ secrets.API_URL }}
+          envkey_ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          envkey_ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY}}
+          file_name: .env.production
+      - name: run build
+        run: quasar build -m pwa
       - name: Copy file dari workspace CI ke Hosting via SSH
         uses: appleboy/scp-action@master
         with:
