@@ -61,10 +61,10 @@ jobs:
           whoami
           cd kajianid.riza.my.id
           ls
-          rm -r -f /css/
-          rm -r -f /js/
-          rm -r -f /fonts/
-          rm -r -f /icons/
+          rm -r -f css
+          rm -r -f js
+          rm -r -f fonts
+          rm -r -f icons
     - name: Copy file dari workspace CI ke Hosting via SSH
       uses: appleboy/scp-action@master
       with:
