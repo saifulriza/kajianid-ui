@@ -94,7 +94,7 @@
         <q-table
           title="Daftar Kajian Hari Ini"
           class="q-mt-sm"
-          :data="data"
+          :data="kajian"
           :columns="columns"
           row-key="id"
           @row-click="onRowClick"
@@ -107,7 +107,7 @@
               label="Semua Kajian"
               @click="redirectKajian"
             />
-            <div v-if="lokasi">
+            <div v-if="lokasi && typeof hasillatlong.address !== 'undefined'">
               <q-btn
                 v-if="typeof lokasi.address.village !== 'undefined'"
                 color="primary"
@@ -125,12 +125,12 @@
                 @click="redirect(lokasi.address.state)"
               />
             </div>
-            <div v-if="!lokasi">
+            <div v-if="!lokasi && typeof hasillatlong.address !== 'undefined'">
               <q-btn
                 color="primary"
                 class="q-ma-sm"
                 :disable="loading"
-                :label="`Kajian di ${hasillatlong.address.village}`"
+                :label="`${'Kajian di ' + hasillatlong.address.village}`"
                 @click="redirect(hasillatlong.address.village)"
               />
             </div>
@@ -143,6 +143,19 @@
 </template>
 
 <script>
+let namaHari = [
+  "Minggu",
+  "Senin",
+  "Selasa",
+  "Rabu",
+  "Kamis",
+  "Jum'at",
+  "Sabtu"
+];
+let hari = new Date().getDay();
+let sekarang = namaHari[hari];
+import User from "models/User";
+import Kajian from "models/Kajian";
 export default {
   name: "PageIndex",
   data() {
@@ -205,14 +218,13 @@ export default {
         .then(response => {
           this.hasillatlong = response.data;
           var date = new Date().getDate();
-          localStorage.setItem(
-            `lokasi${date}`,
-            JSON.stringify(this.hasillatlong)
-          );
+          localStorage.setItem(`lokasi${date}`);
           this.$q.notify({
             type: "positive",
             position: "top",
-            message: `Anda terdeteksi berada di ${this.hasillatlong.display_name}. Aktifkan GPS untuk lokasi lebih akurat`,
+            message: `Anda terdeteksi berada di ${
+              this.hasillatlong ? this.hasillatlong.display_name : ""
+            }. Aktifkan GPS untuk lokasi lebih akurat`,
             actions: [{ icon: "close", color: "white" }]
           });
         })
@@ -245,13 +257,16 @@ export default {
       return this.$router.push(`/kajian/cari/${text}`);
     },
     onRowClick(evt, row) {
-      return this.$router.push(`/kajian/id/${row.id}`);
+      return this.$router.push(`/kajian/id/${row.$id}`);
     },
     async loadData() {
       await this.$axios
         .get(`${process.env.API_URL}/api/v1/kajian/today`)
         .then(response => {
           this.data = response.data.data;
+          Kajian.create({
+            data: this.data
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -292,18 +307,33 @@ export default {
     }
   },
 
-  async created() {
+  async mounted() {
+    const kajianExist = Kajian.exists();
     var date = new Date().getDate();
     var lokasi = localStorage.getItem(`lokasi${date}`);
     if (!lokasi) {
       localStorage.clear();
       await this.getLocation();
     }
-
-    await this.loadData();
+    if (!kajianExist) {
+      await this.loadData();
+    }
+    this.loading = false;
     await this.loadFlyer();
     this.lokasi = JSON.parse(localStorage.getItem(`lokasi${date}`));
-    this.loading = false;
+  },
+
+  computed: {
+    user() {
+      return User.find(1);
+    },
+    kajian() {
+      return Kajian.query()
+        .where(kajian => {
+          return kajian.hari.includes("Jum'at");
+        })
+        .get();
+    }
   }
 };
 </script>

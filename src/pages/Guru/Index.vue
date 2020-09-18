@@ -38,7 +38,11 @@
         <q-item @click="redirectProfile(guru.id)" clickable v-ripple>
           <q-item-section avatar>
             <q-avatar>
-              <q-img v-if="guru.foto" :src="guru.foto" />
+              <q-img
+                v-if="guru.foto"
+                :src="guru.foto"
+                style="max-width:40px; max-height:40px"
+              />
             </q-avatar>
           </q-item-section>
 
@@ -77,13 +81,14 @@
 </template>
 
 <script>
+import Guru from "models/Guru";
 import { copyToClipboard } from "quasar";
 export default {
   name: "GuruComponent",
   data() {
     return {
       loading: true,
-      gurus: {},
+      //gurus: {},
       pages: {}
     };
   },
@@ -111,7 +116,10 @@ export default {
         .get(url)
         .then(response => {
           this.pages = response.data;
-          this.gurus = response.data.data;
+          //this.gurus = response.data.data;
+          Guru.insert({
+            data: response.data.data
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -125,7 +133,10 @@ export default {
         .get(`${process.env.API_URL}/api/v1/guru`)
         .then(response => {
           this.pages = response.data;
-          this.gurus = response.data.data;
+          //this.gurus = response.data.data;
+          Guru.insert({
+            data: response.data.data
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -135,18 +146,18 @@ export default {
         });
     }
   },
-  async created() {
-    await this.loadData();
+  async mounted() {
+    const guru = Guru.query().count();
+    if (guru < 2) await this.loadData();
     this.loading = false;
+  },
+
+  computed: {
+    gurus() {
+      return Guru.all();
+    }
   }
 };
 </script>
 
-<style scoped>
-.q-img {
-  height: 150px;
-}
-.my-card {
-  min-width: 250px;
-}
-</style>
+<style lang="sass" src="./Index.sass" scoped></style>

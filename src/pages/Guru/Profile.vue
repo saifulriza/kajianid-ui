@@ -135,6 +135,7 @@
 </template>
 
 <script>
+import Guru from "models/Guru";
 import { copyToClipboard } from "quasar";
 import moment from "moment";
 export default {
@@ -142,7 +143,7 @@ export default {
   data() {
     return {
       loading: false,
-      data: {},
+      // data: {},
       columns: [
         {
           name: "hari",
@@ -190,27 +191,33 @@ export default {
     },
     async loadData() {
       this.loading = true;
-      await this.$axios
-        .get(`${process.env.API_URL}/api/v1/guru/${this.$route.params.id}`)
-        .then(response => {
-          this.data = response.data.data;
-          this.row = response.data.data.kajian;
-        })
-        .catch(error => {
-          this.$q.notify({
-            type: "negative",
-            message: error.response.data.pesan
-          });
-        });
+      // await this.$axios
+      //   .get(`${process.env.API_URL}/api/v1/guru/${this.$route.params.id}`)
+      //   .then(response => {
+      //     this.data = response.data.data;
+      //     this.row = response.data.data.kajian;
+      //   })
+      //   .catch(error => {
+      //     this.$q.notify({
+      //       type: "negative",
+      //       message: error.response.data.pesan
+      //     });
+      //   });
     },
     RedirectBeranda() {
       return this.$router.push("/");
     }
   },
 
-  async created() {
+  async mounted() {
     await this.loadData();
     this.loading = false;
+  },
+
+  computed: {
+    data() {
+      return Guru.find(this.$route.params.id);
+    }
   }
 };
 </script>

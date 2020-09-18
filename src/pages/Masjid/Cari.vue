@@ -101,7 +101,6 @@ export default {
         .then(response => {
           this.pages = response.data;
           this.datas = response.data.data;
-          console.log(this.datas);
         })
         .catch(() => {
           this.$q.notify({

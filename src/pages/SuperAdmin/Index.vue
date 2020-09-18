@@ -190,8 +190,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.my-card {
-  cursor: pointer !important;
-}
-</style>
+<style lang="sass" src="./Index.sass" scoped></style>

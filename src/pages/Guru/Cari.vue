@@ -5,8 +5,8 @@
       <div class="row flex flex-center" v-if="loading">
         <q-card
           flat
-          style="max-width: 300px"
-          class="q-ma-sm col-2"
+          style="max-width: 300px; min-width: 250px"
+          class="q-ma-sm col-xl-3 col-md-3 col-sm-8 q-ma-sm"
           v-for="n in 5"
           :key="n"
         >
@@ -23,7 +23,7 @@
       <div class="row flex flex-center" v-if="!loading">
         <div v-if="Object.keys(gurus).length == 0">
           <div class="flex flex-center">
-            <q-card class="q-ma-sm bg-primary text-white">
+            <q-card class="q-ma-sm bg-primary text-white ">
               <div class="q-ma-sm flex flex-center">
                 Ustadz tidak ditemukan <br />
               </div>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <q-card
-          class="my-card col-2 q-ma-sm"
+          class="my-card col-xl-3 col-md-3 col-sm-8 q-ma-sm"
           v-for="guru in gurus"
           :key="guru.id"
         >
@@ -243,8 +243,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.q-img {
-  height: 150px;
-}
-</style>
+<style lang="sass" src="./Cari.sass" scoped></style>

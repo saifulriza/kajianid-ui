@@ -80,9 +80,9 @@
         </thead>
         <tbody class="bg-grey-3">
           <tr
-            v-for="kajian in kajians"
-            :key="kajian.id"
-            @click="redirect(kajian.id)"
+            v-for="kajian in kajian"
+            :key="kajian.$id"
+            @click="redirect(kajian.$id)"
             style="cursor:pointer"
           >
             <td class="text-left">{{ kajian.hari }}</td>
@@ -111,7 +111,7 @@
           @click="handleApi(pages.prev_page_url)"
         />
         <q-btn class="q-ma-sm" round color="primary" :label="pages.last_page" />
-        to
+          to
         <q-btn class="q-ma-sm" round color="primary" :label="pages.to" />
         <q-btn
           class="q-ma-sm"
@@ -128,6 +128,8 @@
 
 <script>
 // import moment from 'moment'
+import Kajian from "models/Kajian";
+import Page from "models/Page";
 export default {
   data() {
     return {
@@ -185,6 +187,9 @@ export default {
         .then(response => {
           this.pages = response.data;
           this.kajians = response.data.data;
+          Kajian.insert({
+            data: this.kajians
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -200,8 +205,12 @@ export default {
       await this.$axios
         .get(url)
         .then(response => {
-          this.pages = response.data;
-          this.kajians = response.data.data;
+          Page.insert({
+            data: response.data
+          });
+          Kajian.create({
+            data: response.data.data
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -215,6 +224,12 @@ export default {
   async created() {
     await this.loadSemuaKajian();
     this.loading = false;
+  },
+
+  computed: {
+    kajian() {
+      return Kajian.all();
+    }
   }
 };
 </script>

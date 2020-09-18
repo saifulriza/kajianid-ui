@@ -26,31 +26,31 @@
     <!-- end skeleton -->
     <q-card class="my-card q-ma-sm height-300" v-if="!loading">
       <q-img
-        v-if="typeof masjids.foto[0] !== 'undefined'"
-        :src="masjids.foto[0].link"
+        v-if="typeof this.masjid.foto[0] !== 'undefined'"
+        :src="this.masjid.foto[0].link"
       >
         <q-item
-          @click="redirectProfile(masjids.id)"
+          @click="redirectProfile(masjid.id)"
           class="teks absolute-bottom text-subtitle2 text-center"
           v-ripple
           clickable
           style="white-space: nowrap !important; display:block"
         >
-          {{ masjids.nama }}
+          {{ this.masjid.nama }}
         </q-item>
       </q-img>
       <q-img
-        v-if="typeof masjids.foto[0] == 'undefined'"
+        v-if="typeof this.masjid.foto[0] == 'undefined'"
         src="https://kajianid.riza.my.id/404.jpg"
       >
         <q-item
-          @click="redirectProfile(masjids.id)"
+          @click="redirectProfile(masjid.id)"
           class="teks absolute-bottom text-subtitle2 text-center"
           v-ripple
           clickable
           style="white-space: nowrap !important; display:block"
         >
-          {{ masjids.nama }}
+          {{ this.masjid.nama }}
         </q-item>
       </q-img>
 
@@ -58,27 +58,29 @@
         <q-btn
           outline
           color="primary"
-          v-if="profile"
+          v-if="this.masjid.profil"
           align="center"
           no-caps
           class="text-caption "
         >
           <q style="color:black"
-            ><i>{{ profile }}</i></q
+            ><i>{{ this.masjid.profil.substring(0, 255) + ".." }}</i></q
           >
         </q-btn>
         <div class="q-ma-sm text-caption">
           <table>
             <tr>
               <td><b>Jenis</b></td>
-              <td>: {{ masjids.jenis }}</td>
+              <td>: {{ this.masjid.jenis }}</td>
             </tr>
             <tr>
               <td><b>Review</b></td>
               <td>
                 :
                 {{
-                  masjids.review == null ? "Belum ada" : masjids.review.length
+                  this.masjid.review == null
+                    ? "Belum ada"
+                    : this.masjid.review.length
                 }}
               </td>
             </tr>
@@ -86,7 +88,11 @@
               <td><b>alamat</b></td>
               <td>
                 :
-                {{ masjids.alamat == null ? "Belum ada" : masjids.alamat.nama }}
+                {{
+                  this.masjid.alamat == null
+                    ? "Belum ada"
+                    : this.masjid.alamat.nama
+                }}
               </td>
             </tr>
             <tr>
@@ -94,7 +100,9 @@
               <td>
                 :
                 {{
-                  masjids.kajian == null ? "Belum ada" : masjids.kajian.length
+                  this.masjid.kajian == null
+                    ? "Belum ada"
+                    : this.masjid.kajian.length
                 }}
               </td>
             </tr>
@@ -119,6 +127,7 @@
 </template>
 
 <script>
+import Masjid from "models/Masjid";
 export default {
   name: "MasjidComponent",
   data() {
@@ -142,6 +151,9 @@ export default {
         .get(`${process.env.API_URL}/api/v1/masjid/random`)
         .then(response => {
           this.masjids = response.data;
+          Masjid.insert({
+            data: this.masjids
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -153,17 +165,19 @@ export default {
         });
     }
   },
-  async created() {
-    await this.loadData();
-    this.profile = this.masjids.profil.substring(0, 255) + "..";
+  async mounted() {
+    const masjid = Masjid.exists();
+    if (!masjid) {
+      await this.loadData();
+    }
     this.loading = false;
+  },
+  computed: {
+    masjid() {
+      return Masjid.query().last();
+    }
   }
 };
 </script>
 
-<style scoped>
-.q-img {
-  height: 200px;
-  width: 282px;
-}
-</style>
+<style lang="sass" src="./MasjidComponent.sass" scoped></style>
