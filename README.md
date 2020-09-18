@@ -23,7 +23,7 @@ quasar build
 ```
 
 ### Build tha app for android
-use this 4 following command to generate key
+Use this 4 following command to generate key
 
 ```bash
 keytool -genkey -v -keystore quasar-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias quasar-release
@@ -43,7 +43,7 @@ And then build the app for development
 npm run cordova:dev
 ```
 
-Or build the app for development
+Or build the app for production
 ```bash
 npm run cordova:build
 ```

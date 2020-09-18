@@ -23,4 +23,7 @@
         <preference name="ScrollEnabled" value="true" />
     </platform>
     <allow-navigation href="about:*" />
+    <feature name="Geolocation">
+    <param name="android-package" value="org.apache.cordova.GeoBroker" />
+    </feature>
 </widget>

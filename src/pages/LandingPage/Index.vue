@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-md">
       <!-- skeleton -->
-      <q-skeleton height="250px" v-if="loading" />
+      <q-skeleton height="250px" v-if="loading"/>
       <!-- end skeleton -->
       <div v-if="!loading">
         <q-carousel
@@ -35,7 +35,7 @@
         placeholder="Cari Kajian.."
       >
         <template v-slot:append>
-          <q-icon name="fa fa-search" />
+          <q-icon name="fa fa-search"/>
         </template>
       </q-input>
       <!-- skeleton -->
@@ -44,22 +44,22 @@
         <thead>
           <tr>
             <th class="text-left" style="width: 150px">
-              <q-skeleton animation="blink" type="text" />
+              <q-skeleton animation="blink" type="text"/>
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text" />
+              <q-skeleton animation="blink" type="text"/>
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text" />
+              <q-skeleton animation="blink" type="text"/>
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text" />
+              <q-skeleton animation="blink" type="text"/>
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text" />
+              <q-skeleton animation="blink" type="text"/>
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text" />
+              <q-skeleton animation="blink" type="text"/>
             </th>
           </tr>
         </thead>
@@ -67,22 +67,22 @@
         <tbody>
           <tr v-for="n in 3" :key="n">
             <td class="text-left">
-              <q-skeleton animation="blink" type="text" width="85px" />
+              <q-skeleton animation="blink" type="text" width="85px"/>
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="50px" />
+              <q-skeleton animation="blink" type="text" width="50px"/>
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="35px" />
+              <q-skeleton animation="blink" type="text" width="35px"/>
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="65px" />
+              <q-skeleton animation="blink" type="text" width="65px"/>
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="25px" />
+              <q-skeleton animation="blink" type="text" width="25px"/>
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="85px" />
+              <q-skeleton animation="blink" type="text" width="85px"/>
             </td>
           </tr>
         </tbody>
@@ -94,7 +94,7 @@
         <q-table
           title="Daftar Kajian Hari Ini"
           class="q-mt-sm"
-          :data="data"
+          :data="kajian"
           :columns="columns"
           row-key="id"
           @row-click="onRowClick"
@@ -107,7 +107,7 @@
               label="Semua Kajian"
               @click="redirectKajian"
             />
-            <div v-if="lokasi">
+            <div v-if="lokasi && typeof hasillatlong.address !== 'undefined'">
               <q-btn
                 v-if="typeof lokasi.address.village !== 'undefined'"
                 color="primary"
@@ -125,16 +125,16 @@
                 @click="redirect(lokasi.address.state)"
               />
             </div>
-            <div v-if="!lokasi">
+            <div v-if="!lokasi && typeof hasillatlong.address !== 'undefined'">
               <q-btn
                 color="primary"
                 class="q-ma-sm"
                 :disable="loading"
-                :label="`Kajian di ${hasillatlong.address.village}`"
+                :label="`${'Kajian di ' + hasillatlong.address.village }`"
                 @click="redirect(hasillatlong.address.village)"
               />
             </div>
-            <q-space />
+            <q-space/>
           </template>
         </q-table>
       </div>
@@ -143,7 +143,19 @@
 </template>
 
 <script>
-import User from 'models/User'
+let namaHari = [
+  "Minggu",
+  "Senin",
+  "Selasa",
+  "Rabu",
+  "Kamis",
+  "Jum'at",
+  "Sabtu"
+];
+let hari = new Date().getDay();
+let sekarang = namaHari[hari];
+import User from "models/User";
+import Kajian from "models/Kajian";
 export default {
   name: "PageIndex",
   data() {
@@ -206,14 +218,13 @@ export default {
         .then(response => {
           this.hasillatlong = response.data;
           var date = new Date().getDate();
-          localStorage.setItem(
-            `lokasi${date}`,
-            JSON.stringify(this.hasillatlong)
-          );
+          localStorage.setItem(`lokasi${date}`);
           this.$q.notify({
             type: "positive",
             position: "top",
-            message: `Anda terdeteksi berada di ${this.hasillatlong.display_name}. Aktifkan GPS untuk lokasi lebih akurat`,
+            message: `Anda terdeteksi berada di ${
+              this.hasillatlong ? this.hasillatlong.display_name : ""
+            }. Aktifkan GPS untuk lokasi lebih akurat`,
             actions: [{ icon: "close", color: "white" }]
           });
         })
@@ -246,13 +257,16 @@ export default {
       return this.$router.push(`/kajian/cari/${text}`);
     },
     onRowClick(evt, row) {
-      return this.$router.push(`/kajian/id/${row.id}`);
+      return this.$router.push(`/kajian/id/${row.$id}`);
     },
     async loadData() {
       await this.$axios
         .get(`${process.env.API_URL}/api/v1/kajian/today`)
         .then(response => {
           this.data = response.data.data;
+          Kajian.create({
+            data: this.data
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -279,7 +293,9 @@ export default {
     async loadLatLong() {
       await this.$axios
         .get(
-          `https://locationiq.org/v1/search.php?key=3d0e63349939df&q=${this.data[0].masjid.alamat.nama}&format=json`
+          `https://locationiq.org/v1/search.php?key=3d0e63349939df&q=${
+            this.data[0].masjid.alamat.nama
+          }&format=json`
         )
         .then(response => {
           this.latlong = response.data;
@@ -293,35 +309,32 @@ export default {
     }
   },
 
-  async created() {
+  async mounted() {
+    const kajianExist = Kajian.exists();
     var date = new Date().getDate();
     var lokasi = localStorage.getItem(`lokasi${date}`);
     if (!lokasi) {
       localStorage.clear();
       await this.getLocation();
     }
-
-    await this.loadData();
+    if (!kajianExist) {
+      await this.loadData();
+    }
+    this.loading = false;
     await this.loadFlyer();
     this.lokasi = JSON.parse(localStorage.getItem(`lokasi${date}`));
-    this.loading = false;
   },
 
-  mounted() {
-  User.insert({
-
-    data: {
-      id: 1,
-      name: 'saiful',
-      email:'email@mail.com'
-    }
-
-  })
-  },
-
-  computed:{
-    user(){
+  computed: {
+    user() {
       return User.find(1);
+    },
+    kajian() {
+      return Kajian.query()
+        .where(kajian => {
+          return kajian.hari.includes("Jum'at");
+        })
+        .get();
     }
   }
 };

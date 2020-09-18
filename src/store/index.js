@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import VuexORM from '@vuex-orm/core'
 import User from 'models/User'
 import Guru from 'models/Guru'
+import Kajian from 'models/Kajian'
+import Page from 'models/Page'
 
 
 Vue.use(Vuex)
@@ -13,6 +15,8 @@ const database = new VuexORM.Database()
 // Register Models to Database.
 database.register(User)
 database.register(Guru)
+database.register(Kajian)
+database.register(Page)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({

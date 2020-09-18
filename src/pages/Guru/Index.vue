@@ -125,29 +125,27 @@ export default {
         });
     },
     async loadData() {
-      // await this.$axios
-      //   .get(`${process.env.API_URL}/api/v1/guru`)
-      //   .then(response => {
-      //     this.pages = response.data;
-      //     //this.gurus = response.data.data;
-      //     Guru.insert({
-      //       data : response.data.data
-      //     })
-      //   })
-      //   .catch(() => {
-      //     this.$q.notify({
-      //       type: "negative",
-      //       message: error.response.data.pesan
-      //     });
-      //   });
+      await this.$axios
+        .get(`${process.env.API_URL}/api/v1/guru`)
+        .then(response => {
+          this.pages = response.data;
+          //this.gurus = response.data.data;
+          console.log(this.pages)
+          Guru.insert({
+            data : response.data.data
+          })
+        })
+        .catch(() => {
+          this.$q.notify({
+            type: "negative",
+            message: error.response.data.pesan
+          });
+        });
     }
   },
   async mounted() {
-    const gurus = Guru.exists()
-    if(!gurus){
     await this.loadData();
     this.loading = false;
-    }
   },
 
   computed:{

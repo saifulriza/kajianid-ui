@@ -80,9 +80,9 @@
         </thead>
         <tbody class="bg-grey-3">
           <tr
-            v-for="kajian in kajians"
-            :key="kajian.id"
-            @click="redirect(kajian.id)"
+            v-for="kajian in kajian"
+            :key="kajian.$id"
+            @click="redirect(kajian.$id)"
             style="cursor:pointer"
           >
             <td class="text-left">{{ kajian.hari }}</td>
@@ -128,6 +128,8 @@
 
 <script>
 // import moment from 'moment'
+import Kajian from 'models/Kajian';
+import Page from 'models/Page';
 export default {
   data() {
     return {
@@ -184,7 +186,13 @@ export default {
         .get(`${process.env.API_URL}/api/v1/kajian`)
         .then(response => {
           this.pages = response.data;
+          Page.insert({
+            data : this.pages
+          })
           this.kajians = response.data.data;
+          Kajian.insert({
+            data : this.kajians
+          })
         })
         .catch(error => {
           this.$q.notify({
@@ -213,8 +221,15 @@ export default {
   },
 
   async created() {
-    await this.loadSemuaKajian();
+    const kajian = Kajian.query().count()
+    if(kajian < 2) await this.loadSemuaKajian();
     this.loading = false;
+  },
+
+  computed : {
+    kajian(){
+      return Kajian.all()
+    }
   }
 };
 </script>

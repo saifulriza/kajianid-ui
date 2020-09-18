@@ -8,38 +8,30 @@
           <q-card flat class="row" v-if="loading">
             <div class="col-6">
               <q-card-section>
-                <q-skeleton type="text" width="50%" class="text-subtitle1" />
-                <q-skeleton type="text" class="text-subtitle1" />
-                <q-skeleton type="text" width="50%" class="text-subtitle1" />
-                <q-skeleton type="text" class="text-caption" />
+                <q-skeleton type="text" width="50%" class="text-subtitle1"/>
+                <q-skeleton type="text" class="text-subtitle1"/>
+                <q-skeleton type="text" width="50%" class="text-subtitle1"/>
+                <q-skeleton type="text" class="text-caption"/>
               </q-card-section>
             </div>
             <div class="col-6">
-              <q-skeleton height="150px" width="350px" square />
+              <q-skeleton height="150px" width="350px" square/>
             </div>
           </q-card>
           <!-- end skeleton -->
           <div v-if="!loading">
             <q-card class="my-card q-ma-sm" flat bordered>
-              <q-card-section horizontal>
+              <q-card-section>
                 <q-card-section class="col-6 q-pt-xs">
                   <div class="text-overline" v-if="data.masjid !== null">
                     Lokasi : {{ data.masjid.jenis }} {{ data.masjid.nama
-                    }}<i v-if="latlong.display_name"
-                      >. {{ latlong.display_name }}</i
-                    >
+                    }}
+                    <i v-if="latlong.display_name">. {{ latlong.display_name }}</i>
                   </div>
-                  <div class="text-h5 q-mt-sm q-mb-xs">
+                  <div class="text-h5 q-mt-sm q-mb-xs text-center">
                     <q>{{ data.bahasan }}</q>
                   </div>
-                  <div
-                    class="text-caption text-grey-8"
-                    v-if="data.masjid !== null"
-                  >
-                    {{ data.masjid.profil }}
-                  </div>
                 </q-card-section>
-
                 <q-card-section
                   class="col-5 flex flex-center"
                   style="height:300px;min-width: 150px;"
@@ -54,16 +46,19 @@
                     @update:center="centerUpdate"
                     @update:zoom="zoomUpdate"
                   >
-                    <l-tile-layer :url="url" :attribution="attribution" />
+                    <l-tile-layer :url="url" :attribution="attribution"/>
+                    <l-control position="topright">
+                    <q-btn
+                    color="secondary"
+                    @click="toggle"
+                    :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+                  />
+                    </l-control>
                     <l-marker :lat-lng="marker">
-                      <l-tooltip
-                        :options="{ permanent: true, interactive: true }"
-                      >
+                      <l-tooltip :options="{ permanent: true, interactive: true }">
                         <div @click="showParagraph = !showParagraph">
                           {{ latlong.display_name }}
-                          <p v-show="showParagraph">
-                            Lorem ipsum dolor sit amet.
-                          </p>
+                          <p v-show="showParagraph"></p>
                         </div>
                       </l-tooltip>
                       <l-icon
@@ -79,36 +74,30 @@
                 <q-item>
                   <q-item-section avatar>
                     <q-avatar>
-                      <img :src="data.guru.foto" />
+                      <img :src="data.guru.foto">
                     </q-avatar>
                   </q-item-section>
 
                   <q-item-section>
                     <q-item-label>{{ data.guru.nama }}</q-item-label>
-                    <q-item-label caption>
-                      {{ data.guru.hp }}
-                    </q-item-label>
+                    <q-item-label caption>{{ data.guru.hp }}</q-item-label>
                   </q-item-section>
                 </q-item>
 
-                <q-separator />
-                <q-card-section class="text-caption text-grey-8">
-                  {{ data.guru.profile }}
-                </q-card-section>
+                <q-separator/>
+                <q-card-section class="text-caption text-grey-8">{{ data.guru.profile }}</q-card-section>
               </q-card>
 
-              <q-separator />
+              <q-separator/>
 
               <q-card-actions>
-                <q-btn flat round icon="event" />
-                <q-btn flat>
-                  {{ data.jam_mulai }} - {{ data.jam_selesai }}
-                </q-btn>
+                <q-btn flat round icon="event"/>
+                <q-btn flat>{{ data.jam_mulai }} - {{ data.jam_selesai }}</q-btn>
                 <q-btn flat color="primary">
                   {{
-                    moment(data.tanggal)
-                      .locale("id")
-                      .format("dddd")
+                  moment(data.tanggal)
+                  .locale("id")
+                  .format("dddd")
                   }}
                 </q-btn>
               </q-card-actions>
@@ -121,13 +110,15 @@
   </q-page>
 </template>
 <script>
-import { latLng, icon } from "leaflet";
+import { AppFullscreen } from "quasar";
+import { latLng, icon, } from "leaflet";
 import {
   LMap,
   LTileLayer,
   LMarker,
   LPopup,
   LTooltip,
+  LControl,
   LIcon
 } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -139,7 +130,8 @@ export default {
     LMarker,
     LPopup,
     LTooltip,
-    LIcon
+    LIcon,
+    LControl
   },
 
   data() {
@@ -164,6 +156,21 @@ export default {
   },
   methods: {
     moment,
+    toggle(e) {
+      const target = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+      console.log(target)
+
+      this.$q.fullscreen
+        .toggle(target)
+        .then(() => {
+          // success!
+        })
+        .catch(err => {
+          alert(err);
+          // uh, oh, error!!
+          // console.error(err)
+        });
+    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },
@@ -192,7 +199,9 @@ export default {
     async loadLatLong() {
       await this.$axios
         .get(
-          `https://locationiq.org/v1/search.php?key=3d0e63349939df&q=${this.data.masjid.alamat.nama}&format=json`
+          `https://locationiq.org/v1/search.php?key=3d0e63349939df&q=${
+            this.data.masjid.alamat.nama
+          }&format=json`
         )
         .then(response => {
           this.latlong = response.data[0];

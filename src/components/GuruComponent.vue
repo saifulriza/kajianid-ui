@@ -46,7 +46,7 @@
           class="text-caption "
         >
           <q style="color:black"
-            ><i>{{ profile }}</i></q
+            ><i>{{ guru.profile ? guru.profile.substring(0, 255) + ".."  : "Belum ada profile"}}</i></q
           >
         </q-btn>
         <div class="q-ma-sm text-caption">
@@ -93,9 +93,6 @@
         </q-item-section>
       </q-item>
     </q-card>
-      <p :class="$style.red">
-    This should be red
-  </p>
   </div>
 </template>
 
@@ -138,11 +135,8 @@ export default {
     }
   },
   async mounted() {
-    console.log("warna : " + JSON.stringify(this.$style))
-    await this.loadData();
-    this.profile = this.guru.profile
-      ? this.guru.profile.substring(0, 255) + ".."
-      : "";
+  const guru = Guru.exists()
+  if(!guru) await this.loadData();
     this.loading = false;
   },
   computed:{
