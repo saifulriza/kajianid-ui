@@ -66,11 +66,12 @@
   </q-page>
 </template>
 <script>
+import Masjid from 'models/Masjid'
 export default {
   name: "MasjidIndex",
   data() {
     return {
-      masjids: {},
+      masjidAll: {},
       pages: {},
       loading: true
     };
@@ -98,7 +99,10 @@ export default {
         .get(`${process.env.API_URL}/api/v1/masjid`)
         .then(response => {
           this.pages = response.data;
-          this.masjids = response.data.data;
+          this.masjidAll = response.data.data;
+          Masjid.insert({
+            data : this.masjidAll
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -109,9 +113,16 @@ export default {
     }
   },
 
-  async created() {
-    await this.loadData();
+  async mounted() {
+    const masjid = Masjid.query().count()
+    if(masjid < 2) await this.loadData();
     this.loading = false;
+  },
+
+  computed :{
+    masjids (){
+      return Masjid.all()
+    }
   }
 };
 </script>

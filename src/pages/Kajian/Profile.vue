@@ -13,9 +13,7 @@
                 <q-skeleton type="text" width="50%" class="text-subtitle1"/>
                 <q-skeleton type="text" class="text-caption"/>
               </q-card-section>
-            </div>
-            <div class="col-6">
-              <q-skeleton height="150px" width="350px" square/>
+               <q-skeleton height="150px" width="350px" square/>
             </div>
           </q-card>
           <!-- end skeleton -->

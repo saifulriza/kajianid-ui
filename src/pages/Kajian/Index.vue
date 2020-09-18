@@ -111,7 +111,9 @@
           @click="handleApi(pages.prev_page_url)"
         />
         <q-btn class="q-ma-sm" round color="primary" :label="pages.last_page" />
-        to
+        <div @click="tes">
+          to
+        </div>
         <q-btn class="q-ma-sm" round color="primary" :label="pages.to" />
         <q-btn
           class="q-ma-sm"
@@ -186,9 +188,6 @@ export default {
         .get(`${process.env.API_URL}/api/v1/kajian`)
         .then(response => {
           this.pages = response.data;
-          Page.insert({
-            data : this.pages
-          })
           this.kajians = response.data.data;
           Kajian.insert({
             data : this.kajians
@@ -208,8 +207,12 @@ export default {
       await this.$axios
         .get(url)
         .then(response => {
-          this.pages = response.data;
-          this.kajians = response.data.data;
+          Page.insert({
+            data : response.data
+          }); 
+           Kajian.create({
+            data : response.data.data
+          }); 
         })
         .catch(error => {
           this.$q.notify({
@@ -221,15 +224,14 @@ export default {
   },
 
   async created() {
-    const kajian = Kajian.query().count()
-    if(kajian < 2) await this.loadSemuaKajian();
+    await this.loadSemuaKajian();
     this.loading = false;
   },
 
   computed : {
     kajian(){
       return Kajian.all()
-    }
+    },
   }
 };
 </script>

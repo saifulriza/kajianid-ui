@@ -5,7 +5,7 @@ import User from 'models/User'
 import Guru from 'models/Guru'
 import Kajian from 'models/Kajian'
 import Page from 'models/Page'
-
+import Masjid from 'models/Masjid'
 
 Vue.use(Vuex)
 
@@ -17,6 +17,7 @@ database.register(User)
 database.register(Guru)
 database.register(Kajian)
 database.register(Page)
+database.register(Masjid)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({

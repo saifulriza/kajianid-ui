@@ -38,7 +38,9 @@
         <q-item @click="redirectProfile(guru.id)" clickable v-ripple>
           <q-item-section avatar>
             <q-avatar>
-              <q-img v-if="guru.foto" :src="guru.foto" />
+              <q-img v-if="guru.foto" :src="guru.foto" 
+        style="max-width:40px; max-height:40px"
+        />
             </q-avatar>
           </q-item-section>
 
@@ -144,7 +146,8 @@ export default {
     }
   },
   async mounted() {
-    await this.loadData();
+    const guru = Guru.query().count()
+    if(guru < 2) await this.loadData();
     this.loading = false;
   },
 
