@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import Guru from 'models/Guru';
+import Guru from "models/Guru";
 import { copyToClipboard } from "quasar";
 import moment from "moment";
 export default {
@@ -215,10 +215,9 @@ export default {
   },
 
   computed: {
-    data(){
+    data() {
       return Guru.find(this.$route.params.id);
     }
   }
-
 };
 </script>

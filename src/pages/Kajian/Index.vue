@@ -130,8 +130,8 @@
 
 <script>
 // import moment from 'moment'
-import Kajian from 'models/Kajian';
-import Page from 'models/Page';
+import Kajian from "models/Kajian";
+import Page from "models/Page";
 export default {
   data() {
     return {
@@ -190,8 +190,8 @@ export default {
           this.pages = response.data;
           this.kajians = response.data.data;
           Kajian.insert({
-            data : this.kajians
-          })
+            data: this.kajians
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -208,11 +208,11 @@ export default {
         .get(url)
         .then(response => {
           Page.insert({
-            data : response.data
-          }); 
-           Kajian.create({
-            data : response.data.data
-          }); 
+            data: response.data
+          });
+          Kajian.create({
+            data: response.data.data
+          });
         })
         .catch(error => {
           this.$q.notify({
@@ -228,10 +228,10 @@ export default {
     this.loading = false;
   },
 
-  computed : {
-    kajian(){
-      return Kajian.all()
-    },
+  computed: {
+    kajian() {
+      return Kajian.all();
+    }
   }
 };
 </script>

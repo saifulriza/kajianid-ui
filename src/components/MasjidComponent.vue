@@ -78,7 +78,9 @@
               <td>
                 :
                 {{
-                  this.masjid.review == null ? "Belum ada" : this.masjid.review.length
+                  this.masjid.review == null
+                    ? "Belum ada"
+                    : this.masjid.review.length
                 }}
               </td>
             </tr>
@@ -86,7 +88,11 @@
               <td><b>alamat</b></td>
               <td>
                 :
-                {{ this.masjid.alamat == null ? "Belum ada" : this.masjid.alamat.nama }}
+                {{
+                  this.masjid.alamat == null
+                    ? "Belum ada"
+                    : this.masjid.alamat.nama
+                }}
               </td>
             </tr>
             <tr>
@@ -94,7 +100,9 @@
               <td>
                 :
                 {{
-                  this.masjid.kajian == null ? "Belum ada" : this.masjid.kajian.length
+                  this.masjid.kajian == null
+                    ? "Belum ada"
+                    : this.masjid.kajian.length
                 }}
               </td>
             </tr>
@@ -119,7 +127,7 @@
 </template>
 
 <script>
-import Masjid from 'models/Masjid';
+import Masjid from "models/Masjid";
 export default {
   name: "MasjidComponent",
   data() {
@@ -144,8 +152,8 @@ export default {
         .then(response => {
           this.masjids = response.data;
           Masjid.insert({
-            data : this.masjids
-          })
+            data: this.masjids
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -158,14 +166,14 @@ export default {
     }
   },
   async mounted() {
-  const masjid = Masjid.exists()
-  if(!masjid){ 
-    await this.loadData();
-  }
-      this.loading = false;
+    const masjid = Masjid.exists();
+    if (!masjid) {
+      await this.loadData();
+    }
+    this.loading = false;
   },
-  computed:{
-    masjid(){
+  computed: {
+    masjid() {
       return Masjid.query().last();
     }
   }

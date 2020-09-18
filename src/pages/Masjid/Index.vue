@@ -66,7 +66,7 @@
   </q-page>
 </template>
 <script>
-import Masjid from 'models/Masjid'
+import Masjid from "models/Masjid";
 export default {
   name: "MasjidIndex",
   data() {
@@ -101,7 +101,7 @@ export default {
           this.pages = response.data;
           this.masjidAll = response.data.data;
           Masjid.insert({
-            data : this.masjidAll
+            data: this.masjidAll
           });
         })
         .catch(error => {
@@ -114,16 +114,16 @@ export default {
   },
 
   async mounted() {
-    const masjid = Masjid.query().count()
-    if(masjid < 2) await this.loadData();
+    const masjid = Masjid.query().count();
+    if (masjid < 2) await this.loadData();
     this.loading = false;
   },
 
-  computed :{
-    masjids (){
-      return Masjid.all()
+  computed: {
+    masjids() {
+      return Masjid.all();
     }
   }
 };
 </script>
-<style lang="sass" src="./Index.sass" ></style>
+<style lang="sass" src="./Index.sass"></style>

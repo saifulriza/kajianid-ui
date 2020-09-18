@@ -46,7 +46,11 @@
           class="text-caption "
         >
           <q style="color:black"
-            ><i>{{ guru.profile ? guru.profile.substring(0, 255) + ".."  : "Belum ada profile"}}</i></q
+            ><i>{{
+              guru.profile
+                ? guru.profile.substring(0, 255) + ".."
+                : "Belum ada profile"
+            }}</i></q
           >
         </q-btn>
         <div class="q-ma-sm text-caption">
@@ -66,9 +70,7 @@
             </tr>
             <tr>
               <td><b>Lulusan</b></td>
-              <td>
-                : {{ guru.lulusan == null ? "Belum ada" : guru.lulusan }}
-              </td>
+              <td>: {{ guru.lulusan == null ? "Belum ada" : guru.lulusan }}</td>
             </tr>
             <tr>
               <td><b>Kajian</b></td>
@@ -97,7 +99,7 @@
 </template>
 
 <script>
-import Guru from 'models/Guru';
+import Guru from "models/Guru";
 
 export default {
   name: "GuruComponent",
@@ -121,8 +123,8 @@ export default {
         .get(`${process.env.API_URL}/api/v1/guru/random`)
         .then(response => {
           Guru.create({
-            data : response.data
-          })
+            data: response.data
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -135,16 +137,16 @@ export default {
     }
   },
   async mounted() {
-  const guru = Guru.exists()
-  if(!guru) await this.loadData();
+    const guru = Guru.exists();
+    if (!guru) await this.loadData();
     this.loading = false;
   },
-  computed:{
-    guru(){
+  computed: {
+    guru() {
       return Guru.query().last();
     }
   }
 };
 </script>
 
-<style lang="css" src="./GuruComponent.css" module/>
+<style lang="css" src="./GuruComponent.css" module />

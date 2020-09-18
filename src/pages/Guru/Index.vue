@@ -38,9 +38,11 @@
         <q-item @click="redirectProfile(guru.id)" clickable v-ripple>
           <q-item-section avatar>
             <q-avatar>
-              <q-img v-if="guru.foto" :src="guru.foto" 
-        style="max-width:40px; max-height:40px"
-        />
+              <q-img
+                v-if="guru.foto"
+                :src="guru.foto"
+                style="max-width:40px; max-height:40px"
+              />
             </q-avatar>
           </q-item-section>
 
@@ -79,7 +81,7 @@
 </template>
 
 <script>
-import Guru from 'models/Guru';
+import Guru from "models/Guru";
 import { copyToClipboard } from "quasar";
 export default {
   name: "GuruComponent",
@@ -116,8 +118,8 @@ export default {
           this.pages = response.data;
           //this.gurus = response.data.data;
           Guru.insert({
-            data : response.data.data
-          })
+            data: response.data.data
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -132,10 +134,10 @@ export default {
         .then(response => {
           this.pages = response.data;
           //this.gurus = response.data.data;
-          console.log(this.pages)
+          console.log(this.pages);
           Guru.insert({
-            data : response.data.data
-          })
+            data: response.data.data
+          });
         })
         .catch(() => {
           this.$q.notify({
@@ -146,14 +148,14 @@ export default {
     }
   },
   async mounted() {
-    const guru = Guru.query().count()
-    if(guru < 2) await this.loadData();
+    const guru = Guru.query().count();
+    if (guru < 2) await this.loadData();
     this.loading = false;
   },
 
-  computed:{
-    gurus(){
-      return Guru.all()
+  computed: {
+    gurus() {
+      return Guru.all();
     }
   }
 };

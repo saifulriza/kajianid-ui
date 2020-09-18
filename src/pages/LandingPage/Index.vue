@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-md">
       <!-- skeleton -->
-      <q-skeleton height="250px" v-if="loading"/>
+      <q-skeleton height="250px" v-if="loading" />
       <!-- end skeleton -->
       <div v-if="!loading">
         <q-carousel
@@ -35,7 +35,7 @@
         placeholder="Cari Kajian.."
       >
         <template v-slot:append>
-          <q-icon name="fa fa-search"/>
+          <q-icon name="fa fa-search" />
         </template>
       </q-input>
       <!-- skeleton -->
@@ -44,22 +44,22 @@
         <thead>
           <tr>
             <th class="text-left" style="width: 150px">
-              <q-skeleton animation="blink" type="text"/>
+              <q-skeleton animation="blink" type="text" />
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text"/>
+              <q-skeleton animation="blink" type="text" />
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text"/>
+              <q-skeleton animation="blink" type="text" />
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text"/>
+              <q-skeleton animation="blink" type="text" />
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text"/>
+              <q-skeleton animation="blink" type="text" />
             </th>
             <th class="text-right">
-              <q-skeleton animation="blink" type="text"/>
+              <q-skeleton animation="blink" type="text" />
             </th>
           </tr>
         </thead>
@@ -67,22 +67,22 @@
         <tbody>
           <tr v-for="n in 3" :key="n">
             <td class="text-left">
-              <q-skeleton animation="blink" type="text" width="85px"/>
+              <q-skeleton animation="blink" type="text" width="85px" />
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="50px"/>
+              <q-skeleton animation="blink" type="text" width="50px" />
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="35px"/>
+              <q-skeleton animation="blink" type="text" width="35px" />
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="65px"/>
+              <q-skeleton animation="blink" type="text" width="65px" />
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="25px"/>
+              <q-skeleton animation="blink" type="text" width="25px" />
             </td>
             <td class="text-right">
-              <q-skeleton animation="blink" type="text" width="85px"/>
+              <q-skeleton animation="blink" type="text" width="85px" />
             </td>
           </tr>
         </tbody>
@@ -130,11 +130,11 @@
                 color="primary"
                 class="q-ma-sm"
                 :disable="loading"
-                :label="`${'Kajian di ' + hasillatlong.address.village }`"
+                :label="`${'Kajian di ' + hasillatlong.address.village}`"
                 @click="redirect(hasillatlong.address.village)"
               />
             </div>
-            <q-space/>
+            <q-space />
           </template>
         </q-table>
       </div>
@@ -293,9 +293,7 @@ export default {
     async loadLatLong() {
       await this.$axios
         .get(
-          `https://locationiq.org/v1/search.php?key=3d0e63349939df&q=${
-            this.data[0].masjid.alamat.nama
-          }&format=json`
+          `https://locationiq.org/v1/search.php?key=3d0e63349939df&q=${this.data[0].masjid.alamat.nama}&format=json`
         )
         .then(response => {
           this.latlong = response.data;
