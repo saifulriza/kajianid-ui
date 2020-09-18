@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexORM from '@vuex-orm/core'
 import User from 'models/User'
+import Guru from 'models/Guru'
 
 
 Vue.use(Vuex)
@@ -11,6 +12,7 @@ const database = new VuexORM.Database()
 
 // Register Models to Database.
 database.register(User)
+database.register(Guru)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({

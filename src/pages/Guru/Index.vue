@@ -77,13 +77,14 @@
 </template>
 
 <script>
+import Guru from 'models/Guru';
 import { copyToClipboard } from "quasar";
 export default {
   name: "GuruComponent",
   data() {
     return {
       loading: true,
-      gurus: {},
+      //gurus: {},
       pages: {}
     };
   },
@@ -111,7 +112,10 @@ export default {
         .get(url)
         .then(response => {
           this.pages = response.data;
-          this.gurus = response.data.data;
+          //this.gurus = response.data.data;
+          Guru.insert({
+            data : response.data.data
+          })
         })
         .catch(() => {
           this.$q.notify({
@@ -121,23 +125,35 @@ export default {
         });
     },
     async loadData() {
-      await this.$axios
-        .get(`${process.env.API_URL}/api/v1/guru`)
-        .then(response => {
-          this.pages = response.data;
-          this.gurus = response.data.data;
-        })
-        .catch(() => {
-          this.$q.notify({
-            type: "negative",
-            message: error.response.data.pesan
-          });
-        });
+      // await this.$axios
+      //   .get(`${process.env.API_URL}/api/v1/guru`)
+      //   .then(response => {
+      //     this.pages = response.data;
+      //     //this.gurus = response.data.data;
+      //     Guru.insert({
+      //       data : response.data.data
+      //     })
+      //   })
+      //   .catch(() => {
+      //     this.$q.notify({
+      //       type: "negative",
+      //       message: error.response.data.pesan
+      //     });
+      //   });
     }
   },
-  async created() {
+  async mounted() {
+    const gurus = Guru.exists()
+    if(!gurus){
     await this.loadData();
     this.loading = false;
+    }
+  },
+
+  computed:{
+    gurus(){
+      return Guru.all()
+    }
   }
 };
 </script>

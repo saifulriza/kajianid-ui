@@ -7,7 +7,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "pretty": "prettier --write \"./**/*.vue\""
+    "pretty": "prettier --write \"./**/*.vue\"",
+    "cordova:dev": "quasar dev -m cordova -T android -- --buildConfig=\"../build.cordova.json\"",
+    "cordova:build": "quasar build -m cordova -T android -- --buildConfig=\"../build.cordova.json\""
   },
   "dependencies": {
     "@quasar/extras": "^1.9.4",

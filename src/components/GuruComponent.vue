@@ -25,15 +25,15 @@
     </q-card>
     <!-- end skeleton -->
     <q-card class="my-card q-ma-sm height-300" v-if="!loading">
-      <q-img v-if="gurus.foto" :src="gurus.foto">
+      <q-img v-if="guru.foto" :src="guru.foto">
         <q-item
-          @click="redirectProfile(gurus.id)"
+          @click="redirectProfile(guru.id)"
           class="teks absolute-bottom text-subtitle2 text-center"
           v-ripple
           clickable
           style="white-space: nowrap !important; display:block"
         >
-          {{ gurus.nama }}
+          {{ guru.nama }}
         </q-item>
       </q-img>
 
@@ -53,27 +53,27 @@
           <table>
             <tr>
               <td><b>Tanggal Lahir</b></td>
-              <td>: {{ gurus.tgl_lahir }}</td>
+              <td>: {{ guru.tgl_lahir }}</td>
             </tr>
             <tr>
               <td><b>Tempat Lahir</b></td>
               <td>
                 :
                 {{
-                  gurus.tempat_lahir == null ? "Belum ada" : gurus.tempat_lahir
+                  guru.tempat_lahir == null ? "Belum ada" : guru.tempat_lahir
                 }}
               </td>
             </tr>
             <tr>
               <td><b>Lulusan</b></td>
               <td>
-                : {{ gurus.lulusan == null ? "Belum ada" : gurus.lulusan }}
+                : {{ guru.lulusan == null ? "Belum ada" : guru.lulusan }}
               </td>
             </tr>
             <tr>
               <td><b>Kajian</b></td>
               <td>
-                : {{ gurus.kajian == null ? "Belum ada" : gurus.kajian.length }}
+                : {{ guru.kajian == null ? "Belum ada" : guru.kajian.length }}
               </td>
             </tr>
           </table>
@@ -100,13 +100,14 @@
 </template>
 
 <script>
+import Guru from 'models/Guru';
+
 export default {
   name: "GuruComponent",
   data() {
     return {
       loading: true,
       text: "",
-      gurus: {},
       dense: false,
       profile: ""
     };
@@ -122,7 +123,9 @@ export default {
       await this.$axios
         .get(`${process.env.API_URL}/api/v1/guru/random`)
         .then(response => {
-          this.gurus = response.data;
+          Guru.create({
+            data : response.data
+          })
         })
         .catch(() => {
           this.$q.notify({
@@ -134,13 +137,18 @@ export default {
         });
     }
   },
-  async created() {
+  async mounted() {
     console.log("warna : " + JSON.stringify(this.$style))
     await this.loadData();
-    this.profile = this.gurus.profile
-      ? this.gurus.profile.substring(0, 255) + ".."
+    this.profile = this.guru.profile
+      ? this.guru.profile.substring(0, 255) + ".."
       : "";
     this.loading = false;
+  },
+  computed:{
+    guru(){
+      return Guru.query().last();
+    }
   }
 };
 </script>
