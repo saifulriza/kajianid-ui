@@ -111,9 +111,7 @@
           @click="handleApi(pages.prev_page_url)"
         />
         <q-btn class="q-ma-sm" round color="primary" :label="pages.last_page" />
-        <div @click="tes">
           to
-        </div>
         <q-btn class="q-ma-sm" round color="primary" :label="pages.to" />
         <q-btn
           class="q-ma-sm"

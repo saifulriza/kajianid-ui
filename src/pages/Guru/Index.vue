@@ -134,7 +134,6 @@ export default {
         .then(response => {
           this.pages = response.data;
           //this.gurus = response.data.data;
-          console.log(this.pages);
           Guru.insert({
             data: response.data.data
           });

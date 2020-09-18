@@ -169,7 +169,6 @@ export default {
       const target =
         e.target.parentNode.parentNode.parentNode.parentNode.parentNode
           .parentNode.parentNode;
-      console.log(target);
 
       this.$q.fullscreen
         .toggle(target)
@@ -217,7 +216,6 @@ export default {
           this.center = [this.latlong.lat, this.latlong.lon];
           this.currentCenter = [this.latlong.lat, this.latlong.lon];
           this.marker = [this.latlong.lat, this.latlong.lon];
-          console.log(this.latlong.lat + "+" + this.latlong.lon);
         })
         .catch(error => {
           this.$q.notify({
