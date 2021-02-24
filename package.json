@@ -22,7 +22,7 @@
     "quasar": "^1.13.1",
     "vue2-leaflet": "^2.5.2",
     "vuejs-auto-complete": "^0.9.0",
-    "vuex": "^3.5.1"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.7",
