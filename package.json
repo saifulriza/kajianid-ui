@@ -12,7 +12,7 @@
     "cordova:build": "quasar build -m cordova -T android -- --buildConfig=\"../build.cordova.json\""
   },
   "dependencies": {
-    "@quasar/extras": "^1.9.4",
+    "@quasar/extras": "^1.9.17",
     "@vuex-orm/core": "^0.36.3",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
