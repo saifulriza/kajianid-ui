@@ -14,7 +14,7 @@
   "dependencies": {
     "@quasar/extras": "^1.9.4",
     "@vuex-orm/core": "^0.36.3",
-    "axios": "^0.18.1",
+    "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "countup.js": "^2.0.6",
     "leaflet": "^1.6.0",
