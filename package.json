@@ -16,7 +16,7 @@
     "@vuex-orm/core": "^0.36.3",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
-    "countup.js": "^2.0.6",
+    "countup.js": "^2.8.0",
     "leaflet": "^1.6.0",
     "moment": "^2.27.0",
     "quasar": "^1.13.1",
